@@ -85,3 +85,15 @@ FSM state.finish() очищає стан користувача -->
 (за потреби) створюєш нові кнопки у keyboards.py
 
 Реєструєш їх у main.py -->
+
+<!-- ✅ Як запустити long polling бота як Web Service (безкоштовно)
+1. У файлі Procfile
+
+Замість
+
+worker: python main.py
+
+
+пиши:
+
+web: python main.py -->
