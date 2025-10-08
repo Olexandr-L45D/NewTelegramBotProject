@@ -24,8 +24,9 @@
    .\.venv\Scripts\activate
    ```
 
-TelegramBotProject/
-telegram_bot/
+NewTelegramBotProject/
+│
+└── telegram_bot/ ← корінь (Root Directory для Render)
 │
 ├─ bot/ # Основна логіка бота
 │ ├─ handlers.py # Обробка команд
@@ -37,10 +38,10 @@ telegram_bot/
 │
 ├─ config.py # Токени та налаштування
 ├─ main.py # Точка входу (запуск бота)
-├─ requirements.txt # Залежності
-└─ .env # Ваші токени
+├── requirements.txt ✅ ← цей файл має бути саме тут!
+└── .env ⚠️ ← локально можна тримати, але не пушити в Git!
 
-from aiogram.dispatcher.filters import Command
+<!-- from aiogram.dispatcher.filters import Command -->
 
 <!-- основні налаштування двигуна  -->
 <!-- aiogram==3.0.0b7
