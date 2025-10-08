@@ -29,7 +29,7 @@ NewTelegramBotProject/
 └── telegram_bot/ ← корінь (Root Directory для Render)
 │
 ├─ bot/ # Основна логіка бота
-│ ├─ handlers.py # Обробка команд
+│ ├─ handlers.py # Обробка командgit
 │ ├─ keyboards.py # Інлайн кнопки
 │ └─ states.py # FSM (стани діалогів, якщо потрібно)
 │
