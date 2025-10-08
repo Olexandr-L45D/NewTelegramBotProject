@@ -97,3 +97,19 @@ worker: python main.py
 пиши:
 
 web: python main.py -->
+<!-- old example -->
+<!-- aiogram==2.25.1
+pymongo==4.3.3
+python-dotenv==1.0.1
+ -->
+<!-- 🔍 Підсумок: встановлені головні бібліотеки
+
+requests ✅ — тепер є
+
+aiogram ✅ — головна бібліотека бота
+
+python-dotenv ✅ — читає .env
+
+pymongo ✅ — для MongoDB
+
+aiohttp, magic-filter ✅ — частини aiogram -->

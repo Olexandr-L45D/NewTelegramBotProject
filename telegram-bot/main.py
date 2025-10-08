@@ -4,6 +4,9 @@ from aiogram import Bot, Dispatcher, executor
 from aiogram.dispatcher.filters import Command
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import BotCommand
+import threading
+import requests
+import time
 
 from bot.handlers import (
     start_handler,
@@ -71,10 +74,24 @@ dp.register_callback_query_handler(
 dp.register_message_handler(detail_handler, state=DayCheck.waiting_for_detail)
 dp.register_message_handler(skip_detail_handler, commands=["skip"], state=DayCheck.waiting_for_detail)
 
+# --- added new function re-start on Render.com ---
+def keep_alive():
+    url = "https://newtelegrambotproject.onrender.com"
+    while True:
+        try:
+            requests.get(url)
+            print("Pinged Render to stay awake.")
+        except Exception as e:
+            print(f"Keep-alive error: {e}")
+        time.sleep(600)  # кожні 10 хвилин
+
 
 # --- Запуск ---
 if __name__ == "__main__":
     import asyncio
+    import threading
+
+    threading.Thread(target=keep_alive, daemon=True).start()  # ✅ запуск потоку всередині main
 
     async def on_startup(_):
         await set_commands(bot)
@@ -83,4 +100,28 @@ if __name__ == "__main__":
         print("🤖 Бот запущено...")
 
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
+
+# # added new function re-start on Render.com
+# def keep_alive():
+#     url = "https://newtelegrambotproject.onrender.com"
+#     while True:
+#         try:
+#             requests.get(url)
+#             print("Pinged Render to stay awake.")
+#         except Exception as e:
+#             print(f"Keep-alive error: {e}")
+#         time.sleep(600)  # кожні 10 хвилин
+
+# threading.Thread(target=keep_alive, daemon=True).start()
+# # --- Запуск ---
+# if __name__ == "__main__":
+#     import asyncio
+
+#     async def on_startup(_):
+#         await set_commands(bot)
+#         print("✅ Команди встановлено!")
+#         print("✅ Підключення до MongoDB успішне!")
+#         print("🤖 Бот запущено...")
+
+#     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)
 
