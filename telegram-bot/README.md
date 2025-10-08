@@ -113,3 +113,11 @@ python-dotenv ✅ — читає .env
 pymongo ✅ — для MongoDB
 
 aiohttp, magic-filter ✅ — частини aiogram -->
+
+<!-- Якщо деплою на РЕНДЕР то в файлі  Procfile вказую
+web: python main.py-->
+
+<!-- Якщо деплою на Railway то вказую : worker: python main.py
+ Це фоновий процес, він не слухає веб-порт, просто виконує main.py.
+
+Railway сприймає worker: як окремий тип сервісу.-->
