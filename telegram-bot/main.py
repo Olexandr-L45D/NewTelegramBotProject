@@ -32,6 +32,11 @@ from bot.handlers import (
     skip_detail_handler,
 )
 from bot.handlers_bmi import start_bmi, process_height, process_weight, process_age
+from bot.handlers_sleep import (
+    sleep_start_handler,
+    sleep_hours_callback_handler,
+    sleep_stats_handler
+)
 from bot.states import DayCheck, BMIForm
 
 # --- Ініціалізація бота ---
@@ -43,6 +48,7 @@ dp = Dispatcher(bot, storage=storage)
 async def set_commands(bot: Bot):
     commands = [
         BotCommand(command="start", description="🤖 Почати роботу з ботом"),
+        BotCommand(command="sleep", description="💤 Трекер сну"),
         BotCommand(command="save", description="💾 Зберегти повідомлення"),
         BotCommand(command="day", description="💬 Як пройшов день?"),
         BotCommand(command="id", description="🆔 Отримати свій Telegram ID"),
@@ -60,6 +66,11 @@ dp.register_message_handler(process_age, state=BMIForm.waiting_for_age)
 dp.register_message_handler(daycheck_start_handler, lambda m: m.text == "💬 Як пройшов день?")
 dp.register_message_handler(users_handler, lambda m: m.text == "👥 Користувачі")
 dp.register_message_handler(id_handler, lambda m: m.text == "🆔 Мій ID")
+# --- Реєстрація нових хендлерів для трекера годин сну---
+dp.register_callback_query_handler(sleep_start_handler, lambda c: c.data == "sleep")
+dp.register_callback_query_handler(sleep_hours_callback_handler, lambda c: c.data.startswith("sleep_"))
+dp.register_callback_query_handler(sleep_stats_handler, lambda c: c.data == "stats_sleep")
+
 
 dp.register_message_handler(start_handler, Command("start"))
 dp.register_message_handler(save_handler, Command("save"))

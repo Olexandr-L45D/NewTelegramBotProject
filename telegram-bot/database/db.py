@@ -19,6 +19,9 @@ db = client["telegram_bot"]
 
 # (опціонально) створюємо колекцію користувачів
 users_collection = db["users"]
+# (опціонально) створюємо колекцію для трекера сну
+sleep_collection = db["sleep"] 
+sleep_collection = db["sleep_data"] 
 
 # Тест підключення
 try:
