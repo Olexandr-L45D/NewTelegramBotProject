@@ -16,7 +16,13 @@ class BMIForm(StatesGroup):
     waiting_for_weight = State()
     waiting_for_age = State()
 
+# 🆕 Новий FSM для калькулятора калорій
+class CaloriesTracker(StatesGroup):
+    waiting_for_selection = State()
+    
 
+
+# Базовий приклад розрахунка BMI з курса  
 #     user_weight = float(input('Your weight, kg ?'))
 # user_height = float(input('Your height, m ?'))
 # BMI2 = user_weight/(user_height**2)

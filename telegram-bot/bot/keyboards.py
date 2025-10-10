@@ -22,6 +22,9 @@ def main_menu_keyboard():
         InlineKeyboardButton("🔍 Пошук користувачів", callback_data="search"),
         InlineKeyboardButton("👥 Користувачі", callback_data="users"),
     )
+     # 🆕 Додаємо кнопку для переходу до калькулятора калорій
+    kb.add(InlineKeyboardButton("🍎 Калькулятор калорій", callback_data="calories"))
+    
     return kb
 
 
@@ -44,16 +47,64 @@ def sleep_keyboard():
     kb.add(InlineKeyboardButton("⬅️ Назад", callback_data="back_to_menu"))
     return kb
 
-# --- (СТАРИЙ підхід) Клавіатура вибору кількості годин сну --- callback_data="slip"---
-# def sleep_keyboard():
-#     kb = InlineKeyboardMarkup(row_width=6)
-#     kb.add(
-#         InlineKeyboardButton("3 год", callback_data="mood_bad"),
-#         InlineKeyboardButton("4 год", callback_data="mood_bad"),
-#         InlineKeyboardButton("5 год", callback_data="mood_bad"),
-#         InlineKeyboardButton("6 год", callback_data="mood_bad"),
-#         InlineKeyboardButton("7 год", callback_data="mood_good"),
-#         InlineKeyboardButton("8 год", callback_data="mood_good")
-#     )
-#     return kb
+# --- 🆕---НОВА Клавіатура для підрахунку кількості калорій  ---
+# все приблизно за 100г продукта
+CALORIE_BASE = {
+    "🍎 Яблуко ": 52,
+    "🍌 Банан ": 89,
+    "🍓 Полуниця ": 32,
+    "🍇 Виноград ": 69,
+    "🍍 Ананас ": 50,
+    "🍞 Хліб ~30г": 80,  
+    "🥚 Яйце (1 шт)": 70,
+    "🥚 Яйце ": 155,
+    "🥣 Каша вівсяна ": 88,
+    "🥣 Каша рис ": 88,
+    "🥣 Каша гречка ": 88,
+    "🥔 Картопля варена ": 82,
+    "🥔 Картопля смажена ": 192,
+    "🍚 Рис варений": 130,
+    "🍝 Макарони ": 130,
+    "🍳 Омлет ": 180,
+    "🍗 Курка ": 165,
+    "🐟 Риба ": 120,  
+    "🥩 Яловичина ": 250,
+    "🍖 Свинина ": 290,
+    "🥛 Молоко ": 120,
+    "🥛 Молоко ": 60,
+    "🍶 Йогурт ": 140,
+    "🍶 Йогурт ": 70,
+    "🥗 Суп овоч ": 90,
+    "🥦 Броколі ": 34,
+    "🥕 Морква ": 41,
+    "🍅 Помідор ": 18,
+    "🧀 Сир твердий ": 350,
+    "🍫 Шоколад ": 550,
+    "🌰 Горіхи волоські ": 650,
+    "🌽 Кукурудза свіжа ": 97,
+    "☕ Кава з цукром": 30,
+}
+
+
+def calories_keyboard(selected=None):
+    """
+    Створює клавіатуру для підрахунку калорій.
+    selected — список вибраних продуктів (підсвічуються ✅)
+    """
+    if selected is None:
+        selected = []
+
+    kb = InlineKeyboardMarkup(row_width=2)
+    for name, kcal in CALORIE_BASE.items():
+        label = f"{'✅ ' if name in selected else ''}{name} — {kcal} ккал"
+        kb.insert(InlineKeyboardButton(label, callback_data=f"food_{name}"))
+
+    kb.add(
+        InlineKeyboardButton("📊 Підрахувати калорії", callback_data="calc_calories"),
+    
+        InlineKeyboardButton("⬅️ Назад", callback_data="back_to_menu")
+    )
+    return kb
+
+
 

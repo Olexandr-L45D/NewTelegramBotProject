@@ -120,3 +120,41 @@ async def skip_detail_handler(message: types.Message, state: FSMContext):
     """Коли користувач вирішив пропустити деталі"""
     await message.answer("Ок 😊 Якщо захочеш — розповіси пізніше.")
     await state.finish()    
+
+async def back_to_menu_handler(callback_query: types.CallbackQuery, state: FSMContext):
+    """Обробник кнопки '⬅️ Назад' — повернення в головне меню."""
+
+    await state.finish() 
+    await callback_query.answer()  # обов’язково, щоб Telegram не показував "годинник"    
+
+    await callback_query.message.edit_text(
+        "🏠 Ви повернулись у головне меню:",
+        reply_markup=main_menu_keyboard()
+    )
+
+async def back_to_menu_from_calories(callback_query: types.CallbackQuery, state: FSMContext):
+    await callback_query.answer()
+    await state.finish()
+    await callback_query.message.edit_text(
+        "🏠 Ви повернулись у головне меню:",
+        reply_markup=main_menu_keyboard()
+    )
+
+# async def back_to_menu_from_sleep(callback_query: types.CallbackQuery, state: FSMContext):
+#     await callback_query.answer()
+#     await state.finish()
+#     await callback_query.message.edit_text(
+#         "🌙 Меню сну:",
+#         reply_markup=sleep_menu_keyboard()
+#     )
+
+   
+
+#     @dp.callback_query_handler(lambda c: c.data.startswith("back"))
+# async def process_any_back(callback_query: types.CallbackQuery, state: FSMContext):
+#     await state.finish()
+#     await callback_query.message.edit_text(
+#         "🔙 Повернувся в головне меню:", 
+#         reply_markup=main_menu_keyboard
+#     )
+

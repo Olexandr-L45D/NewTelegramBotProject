@@ -1,3 +1,4 @@
+# handlers_bmi
 from aiogram import types
 from aiogram.dispatcher import FSMContext
 from bot.states import BMIForm
@@ -17,7 +18,7 @@ async def process_height(message: types.Message, state: FSMContext):
         if not 0.5 < height < 2.5:
             raise ValueError
         await state.update_data(height=height)
-        await message.answer("⚖️ Введи свою вагу в кг (наприклад, 68):")
+        await message.answer("⚖️ Введи свою вагу в кг (наприклад, 68.5):")
         await BMIForm.waiting_for_weight.set()
     except ValueError:
         await message.answer("🚫 Введи коректний зріст (від 0.5 до 2.5 м).")
