@@ -47,19 +47,28 @@ NewTelegramBotProject/
 ├── runtime.txt ← ось СЮДИ додати
 └── .env ⚠️ ← локально можна тримати, але не пушити в Git!
 
-<!-- ІНШИЙ приклад для РЕЛВЕЙ
+<!--  приклад для деплою на Railway + handlers_sleep + handlers_bmi-->
+
 NewTelegramBotProject/
 │
-├── README.md          ← тут
-├── telegram_bot/      ← Root Directory для Render
-│   ├─ bot/
-│   ├─ database/
-│   ├─ main.py
-│   ├─ config.py
-│   ├─ requirements.txt
-│   └─ .env
-└── runtime.txt
- -->
+├── Procfile ← тут
+├── README.md ← тут
+├── telegram_bot/ ← Root Directory для Render
+│ ├─ bot/ # Основна логіка бота
+│ ├─ handlers.py # Обробка командgit
+│ ├─ handlers_sleep.py # Обробка коман трекера сну
+│ ├─ handlers_bmi.py # Обробка команд розрахунка BMI
+│ ├─ handlers_calories.py # НОВИЙ !!! Обробка коман трекера калорій
+│ ├─ keyboards.py # Інлайн кнопки
+│ └─ states.py # FSM (стани діалогів, якщо потрібно)
+│ │
+│ ├─ database/ # Модулі для роботи з MongoDB
+│ └─ db.py
+│ ├─ main.py
+│ ├─ config.py
+│ ├─ requirements.txt
+│ └─ .env
+└── runtime.txt ← тут
 
 <!-- from aiogram.dispatcher.filters import Command -->
 
@@ -246,3 +255,13 @@ Railway Docs
 
 Мінімізуй залежності
 У requirements.txt — тільки потрібні пакети, без зайвих “важких” бібліотек. -->
+
+✅ РЕЗУЛЬТАТ роботи трекера калорій:
+
+Кнопка 🍎 Калькулятор калорій з’явиться у головному меню.
+
+Користувач обирає продукти → бачить ✅ → тисне “📊 Підрахувати калорії”.
+
+Отримує суму калорій та довідкову норму (Міфлін-Сан Жор).
+
+FSM (стани) гарантує, що бот не зіб’ється у діалозі.
