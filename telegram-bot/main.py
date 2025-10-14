@@ -46,7 +46,7 @@ from bot.handlers_calories import (
 )
 
 from bot.states import DayCheck, BMIForm, CaloriesTracker
-from bot.clear_handler import router as clear_router
+from bot.clear_handler import register_handlers as register_clear_handlers
 
 
 # --- Ініціалізація бота ---
@@ -126,7 +126,9 @@ async def keep_alive(url: str):
                 print(f"⚠️ Keep-alive error: {e}")
             await asyncio.sleep(600)  # кожні 10 хвилин
 
-dp.include_router(clear_router)
+# … після всіх інших dp.register_* …
+register_clear_handlers(dp)
+
 
 # --- Запуск Бота ---
 if __name__ == "__main__":

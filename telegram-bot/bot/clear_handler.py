@@ -1,24 +1,18 @@
-from aiogram import types, Router
-from aiogram.filters import Command
+from aiogram import types
+from aiogram.dispatcher import Dispatcher, FSMContext
+from bot.keyboards import main_menu_keyboard
 
-router = Router()
+async def clear_chat_handler(callback: types.CallbackQuery, state: FSMContext):
+    # Очистка чату (видаляємо останні 50 повідомлень)
+    chat_id = callback.message.chat.id
+    messages = await callback.message.chat.get_history(limit=50)
+    for msg in messages:
+        try:
+            await callback.message.bot.delete_message(chat_id, msg.message_id)
+        except:
+            pass
+    await callback.message.answer("🧹 Чат очищено!", reply_markup=main_menu_keyboard())
+    await callback.answer()
 
-@router.message(Command("clear"))
-async def clear_chat(message: types.Message):
-    """
-    🧹 Команда для очищення чату користувача.
-    Видаляє останні 50 повідомлень у поточному чаті.
-    """
-    chat_id = message.chat.id
-    user_id = message.from_user.id
-
-    await message.answer("🧹 Очищаю чат...")
-
-    try:
-        for i in range(50):  # можна збільшити або зменшити
-            msg_id = message.message_id - i
-            await message.bot.delete_message(chat_id=chat_id, message_id=msg_id)
-        await message.answer("✅ Чат очищено!")
-    except Exception as e:
-        await message.answer("⚠️ Не всі повідомлення можна видалити (Telegram має обмеження).")
-        print(f"Помилка видалення: {e}")
+def register_handlers(dp: Dispatcher):
+    dp.register_callback_query_handler(clear_chat_handler, lambda c: c.data == "clear")
