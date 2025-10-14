@@ -46,6 +46,8 @@ from bot.handlers_calories import (
 )
 
 from bot.states import DayCheck, BMIForm, CaloriesTracker
+from bot.clear_handler import router as clear_router
+
 
 # --- Ініціалізація бота ---
 bot = Bot(token=BOT_TOKEN)
@@ -55,6 +57,7 @@ dp = Dispatcher(bot, storage=storage)
 # --- Команди в меню Telegram --- "📊 Підрахувати калорії"
 async def set_commands(bot: Bot):
     commands = [
+        BotCommand(command="clear", description="🧹 Очистити чат"),  # 🧹 додана команда
         BotCommand(command="start", description="🤖 Почати роботу з ботом"),
         BotCommand(command="sleep", description="💤 Трекер сну"),
         BotCommand(command="calories", description="📊 Трекер калорій"),
@@ -123,6 +126,7 @@ async def keep_alive(url: str):
                 print(f"⚠️ Keep-alive error: {e}")
             await asyncio.sleep(600)  # кожні 10 хвилин
 
+dp.include_router(clear_router)
 
 # --- Запуск Бота ---
 if __name__ == "__main__":
